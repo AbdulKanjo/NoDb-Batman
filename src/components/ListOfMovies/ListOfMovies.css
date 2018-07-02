@@ -1,0 +1,30 @@
+.border {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: stretch;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  left: 80px;
+  color: black;
+}
+.header-pic {
+  height: 80px;
+  position: relative;
+  bottom: 25px;
+}
+.movies {
+  width: 350px;
+}
