@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./ListOfMovies.css";
 import axios from "axios";
-import toast from "react-toastify";
 import swal from "sweetalert2";
 import Button from "../Buttons/buttons";
 
@@ -35,7 +34,6 @@ class ListOfMovies extends Component {
 
   handleClick(id) {
     axios.post(`/api/movie/`, { id }).then(res => {
-      console.log(res.data);
       this.setState({
         movies: res.data.movies,
         faveMovies: res.data.favMovies
@@ -61,24 +59,6 @@ class ListOfMovies extends Component {
       this.setState({ movies: res.data });
     });
   }
-  // handleDeleteBack(e) {
-  //   axios.delete(`/api/movie/delete/${e}`).then(res => {
-  //     swal({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       type: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, delete it!"
-  //     }).then(result => {
-  //       if (result.value) {
-  //         swal("Deleted!", "The movie has been deleted", "success");
-  //       }
-  //     });
-  //     this.setState({ movies: res.data });
-  //   });
-  // }
 
   handleIncrement(e) {
     axios.put(`/api/movie/${e}`).then(res => {
@@ -91,11 +71,14 @@ class ListOfMovies extends Component {
     });
   }
   render() {
-    console.log(this.state.movies);
-
     let search = this.state.movies
       .filter((e, i) => {
-        return e.title.includes(this.state.filterString);
+        var title = e.title.toLowerCase();
+        var titleU = e.title.toUpperCase();
+        return (
+          title.includes(this.state.filterString) ||
+          titleU.includes(this.state.filterString)
+        );
       })
       .map((e, i) => {
         return (
@@ -108,10 +91,9 @@ class ListOfMovies extends Component {
                   width="200"
                   src={`https://image.tmdb.org/t/p/w500${e.poster_path}`}
                 />
-
                 <h5> Popularity: {e.popularity} views</h5>
                 <h5>
-                  Votes: {e.vote_count} Ratings: {e.vote_average}
+                  Votes: {e.vote_count} Ratings: {Math.floor(e.vote_average)}
                 </h5>
                 <h5> Released: {e.release_date} </h5>
                 <Button
@@ -127,7 +109,6 @@ class ListOfMovies extends Component {
         );
       });
     let showMovies = this.state.faveMovies.map((e, i) => {
-      console.log(e);
       return (
         <div className="each-el" key={i}>
           <div className="movies">

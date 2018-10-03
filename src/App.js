@@ -32,8 +32,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("HomePage:", this.state.home, "FavPage:", this.state.favs);
-
     return (
       <div>
         <NavigationList

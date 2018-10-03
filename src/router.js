@@ -7,6 +7,6 @@ import Details from "./components/ListOfMovies/Details";
 export default (
   <Switch>
     <Route exact path="/" component={ListOfMovies} />
-    <Route path="/details/:id" component={Details} />
+    <Route path="/moviedets" component={Details} />
   </Switch>
 );

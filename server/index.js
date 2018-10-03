@@ -1,12 +1,9 @@
 require("dotenv").config();
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const main = require("./controllers/main_controller.js");
 const app = express();
 app.use(bodyParser.json());
-
-console.log(process.env.PASSWORD_KEY);
 
 app.post("/api/movie/", main.addFavs); //done
 app.get("/api/movie", main.getmovie); //done

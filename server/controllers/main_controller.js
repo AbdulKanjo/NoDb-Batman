@@ -19,7 +19,8 @@ module.exports = {
       .then(response => {
         movies = response.data.results;
         res.status(200).send(movies);
-      });
+      })
+      .catch(e => console.log(e));
   },
 
   favoriteMovies: (req, res, next) => {
@@ -27,32 +28,18 @@ module.exports = {
   },
 
   addFavs: (req, res, next) => {
-    console.log(req.body);
-
     let { id } = req.body;
     const index = movies.findIndex(movie => movie.id == parseInt(id));
     let deletedMovie = movies.splice(index, 1);
-    console.log(deletedMovie);
+
     favMovies.push(deletedMovie[0]);
     res.status(200).send({ movies, favMovies });
   },
-  // addBack: (req, res, next) => {
-  //   const { id } = req.params;
-  //   console.log(id);
-
-  //   const index = movies.findIndex(movie => movie.id == parseInt(id));
-  //   let deletedMovie = favMovies.splice(index, 1);
-  //   console.log(deletedMovie);
-  //   movies.push(deletedMovie[0]);
-  //   res.status(200).send({ movies, favMovies });
-  // },
 
   increment: (req, res, next) => {
-    // let { vote_average } = req.body;
     const updateRating = req.params.id;
     const movieIndex = movies.findIndex(movie => movie.id == updateRating);
     let movie = movies[movieIndex];
-    console.log(movie);
 
     movies[movieIndex] = {
       ...movie,
@@ -62,11 +49,9 @@ module.exports = {
     res.status(200).send(movies);
   },
   decrement: (req, res, next) => {
-    // let { vote_average } = req.body;
     const updateRating = req.params.id;
     const movieIndex = movies.findIndex(movie => movie.id == updateRating);
     let movie = movies[movieIndex];
-    console.log(movie);
 
     movies[movieIndex] = {
       ...movie,
